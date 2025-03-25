@@ -53,6 +53,7 @@ public class GuardFSMSO : BaseFSMSO
                             Debug.LogError("Failed to enter Patrol state!");
                             return;
                         }
+                        OnStateChangedNotifyBegin();
                     }
                 }
                 break;
@@ -71,6 +72,7 @@ public class GuardFSMSO : BaseFSMSO
                             Debug.LogError("Failed to enter Idle state!");
                             return;
                         }
+                        OnStateChangedNotifyBegin();
                     }
                 }
                 break;

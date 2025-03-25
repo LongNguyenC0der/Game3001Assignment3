@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum EState : byte
@@ -9,6 +10,12 @@ public enum EState : byte
 
 public abstract class BaseFSMSO : ScriptableObject
 {
+    public class OnStateChangedEventArgs : EventArgs
+    {
+        public EState state;
+    }
+    public event EventHandler<OnStateChangedEventArgs> OnStateChanged;
+
     [SerializeField] protected BaseStateSO[] baseStateSOArray;
     protected BaseStateSO currentStateSO;
     protected EState currentState;
@@ -27,4 +34,8 @@ public abstract class BaseFSMSO : ScriptableObject
     }
 
     public abstract void Tick(float deltaTime);
+    protected void OnStateChangedNotifyBegin()
+    {
+        OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = currentState });
+    }
 }

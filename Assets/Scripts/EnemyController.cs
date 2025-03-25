@@ -32,4 +32,5 @@ public class EnemyController : MonoBehaviour
     }
 
     public Transform[] GetPatrolPoints() { return patrolPoints; }
+    public BaseFSMSO GetBaseFSMSO() { return finiteStateMachine; }
 }
