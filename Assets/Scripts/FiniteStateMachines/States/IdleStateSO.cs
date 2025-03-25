@@ -3,11 +3,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Objects/States/Idle")]
 public class IdleStateSO : BaseStateSO
 {
-    public override bool EnterState()
+    public override bool EnterState(EnemyController ownerUnit)
     {
-        base.EnterState();
+        base.EnterState(ownerUnit);
 
-        Debug.Log("Entered IDLE State");
+        Debug.Log("Entered Idle State");
 
         return true;
     }
@@ -21,7 +21,7 @@ public class IdleStateSO : BaseStateSO
     {
         base.ExitState();
 
-        Debug.Log("Exitting IDLE State");
+        Debug.Log("Exiting Idle State");
 
         return true;
     }

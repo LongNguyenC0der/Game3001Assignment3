@@ -12,14 +12,13 @@ public abstract class BaseStateSO : ScriptableObject
 {
     public EExecutionState ExecutionState {  get; protected set; }
 
-    public virtual void OnEnable()
-    {
-        ExecutionState = EExecutionState.None;
-    }
+    protected EnemyController ownerUnit;
 
-    public virtual bool EnterState()
+    public virtual bool EnterState(EnemyController ownerUnit)
     {
         ExecutionState = EExecutionState.Active;
+        if (!this.ownerUnit) this.ownerUnit = ownerUnit;
+
         return true;
     }
 

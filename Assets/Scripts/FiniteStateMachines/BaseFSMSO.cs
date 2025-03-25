@@ -1,36 +1,30 @@
 using UnityEngine;
 
-public class BaseFSMSO : MonoBehaviour
+public enum EState : byte
 {
-    BaseStateSO startingState;
-    BaseStateSO currentState;
+    Idle,
+    Patrol,
+    MoveTowardsPlayer
+}
 
-    private void Awake()
-    {
-        currentState = null;
-    }
+public abstract class BaseFSMSO : ScriptableObject
+{
+    [SerializeField] protected BaseStateSO[] baseStateSOArray;
+    protected BaseStateSO currentStateSO;
+    protected EState currentState;
 
-    private void Start()
+    protected EnemyController ownerUnit;
+
+    public virtual void Activate(EnemyController ownerUnit)
     {
-        if (startingState == null)
+        if (baseStateSOArray.Length == 0)
         {
-            EnterState(startingState);
+            Debug.LogError("Finite State Machine does not contain any states!");
+            return;
         }
+
+        this.ownerUnit = ownerUnit;
     }
 
-    private void Update()
-    {
-        if (currentState)
-        {
-            currentState.Tick();
-        }
-    }
-
-    private void EnterState(BaseStateSO nextState)
-    {
-        if (!nextState) return;
-
-        currentState = nextState;
-        currentState.EnterState();
-    }
+    public abstract void Tick(float deltaTime);
 }

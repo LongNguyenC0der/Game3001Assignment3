@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private BaseFSMSO finiteStateMachine;
+    [SerializeField] private Transform[] patrolPoints;
     public NavMeshAgent NavMeshAgent { get; private set; }
 
     private void Awake()
@@ -14,11 +15,21 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
-        
+        if (!finiteStateMachine)
+        {
+            Debug.LogError("EnemyController doesn't have an FSM!");
+            return;
+        }
+        else
+        {
+            finiteStateMachine.Activate(this);
+        }
     }
 
     private void Update()
     {
-        
+        finiteStateMachine.Tick(Time.deltaTime);
     }
+
+    public Transform[] GetPatrolPoints() { return patrolPoints; }
 }

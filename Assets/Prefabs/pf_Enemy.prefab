@@ -220,6 +220,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cc0dbcb882764428c204366dfe6faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  finiteStateMachine: {fileID: 11400000, guid: 040e7874c5e8c6946aab234a7bb7bbb3, type: 2}
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!195 &5427507549106870918
 NavMeshAgent:
   m_ObjectHideFlags: 0
