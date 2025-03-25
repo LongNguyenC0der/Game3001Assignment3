@@ -5,6 +5,7 @@ public class PatrolStateSO : BaseStateSO
 {
     private Vector3 pointA;
     private Vector3 pointB;
+    private Vector3 currentDestination;
     private bool bIsReturning = false;
 
     public override bool EnterState(EnemyController ownerUnit)
@@ -12,6 +13,7 @@ public class PatrolStateSO : BaseStateSO
         base.EnterState(ownerUnit);
 
         Debug.Log("Entered Patrol State");
+        bIsReturning = false;
 
         Transform[] patrolPoints = ownerUnit.GetPatrolPoints();
         if (patrolPoints.Length < 1) return false;
@@ -25,11 +27,22 @@ public class PatrolStateSO : BaseStateSO
 
     public override void Tick()
     {
-        if (!ownerUnit.NavMeshAgent.pathPending && ownerUnit.NavMeshAgent.remainingDistance <= ownerUnit.NavMeshAgent.stoppingDistance)
+        if (ExecutionState == EExecutionState.Active)
         {
-            Debug.Log("Reach!");
-            bIsReturning = !bIsReturning;
-            ownerUnit.NavMeshAgent.destination = bIsReturning ? pointA : pointB;
+            if (!ownerUnit.NavMeshAgent.pathPending && ownerUnit.NavMeshAgent.remainingDistance <= ownerUnit.NavMeshAgent.stoppingDistance)
+            {
+                Debug.Log("Reach!");
+
+                if (bIsReturning && currentDestination == pointA)
+                {
+                    ExitState();
+                    return;
+                }
+
+                bIsReturning = !bIsReturning;
+                currentDestination = bIsReturning ? pointA : pointB;
+                ownerUnit.NavMeshAgent.destination = currentDestination;
+            }
         }
     }
 

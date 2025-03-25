@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/FSM/Guard")]
 public class GuardFSMSO : BaseFSMSO
 {
-    private const float MAX_TIMER = 3.0f;
+    public event EventHandler OnTimerTimeOut;
+
+    public const float MAX_TIMER = 3.0f;
     private Dictionary<EState, BaseStateSO> stateDict = new Dictionary<EState, BaseStateSO>();
     public float Timer {  get; private set; }
+    public int Failsafe { get; private set; }
 
     public override void Activate(EnemyController ownerUnit)
     {
@@ -20,6 +23,7 @@ public class GuardFSMSO : BaseFSMSO
         currentStateSO = stateDict[currentState];
 
         Timer = 0.0f;
+        Failsafe = 0;
 
         if (!currentStateSO.EnterState(ownerUnit))
         {
@@ -30,51 +34,19 @@ public class GuardFSMSO : BaseFSMSO
 
     public override void Tick(float deltaTime)
     {
-        if (currentStateSO.ExecutionState != EExecutionState.Active)
-        {
-            Debug.LogError($"State failed with status: {currentStateSO.ExecutionState}");
-            return;
-        }
+        //if (currentStateSO.ExecutionState != EExecutionState.Active)
+        //{
+        //    Debug.LogError($"State failed with status: {currentStateSO.ExecutionState}");
+        //    return;
+        //}
 
         switch(currentState)
         {
             case EState.Idle:
-                // Consider changing states after x amount of time
-                Timer += deltaTime;
-                if (Timer > MAX_TIMER)
-                {
-                    Timer = 0.0f;
-                    if (currentStateSO.ExitState())
-                    {
-                        currentState = EState.Patrol;
-                        currentStateSO = stateDict[currentState];
-                        if (!currentStateSO.EnterState(ownerUnit))
-                        {
-                            Debug.LogError("Failed to enter Patrol state!");
-                            return;
-                        }
-                        OnStateChangedNotifyBegin();
-                    }
-                }
+                HandleIdle(deltaTime);
                 break;
             case EState.Patrol:
-                // Consider changing states after x amount of time
-                Timer += deltaTime;
-                if (Timer > MAX_TIMER)
-                {
-                    Timer = 0.0f;
-                    if (currentStateSO.ExitState())
-                    {
-                        currentState = EState.Idle;
-                        currentStateSO = stateDict[currentState];
-                        if (!currentStateSO.EnterState(ownerUnit))
-                        {
-                            Debug.LogError("Failed to enter Idle state!");
-                            return;
-                        }
-                        OnStateChangedNotifyBegin();
-                    }
-                }
+                HandlePatrol(deltaTime);
                 break;
             case EState.MoveTowardsPlayer:
                 break;
@@ -83,5 +55,81 @@ public class GuardFSMSO : BaseFSMSO
         }
 
         currentStateSO.Tick();
+    }
+
+    private void HandleIdle(float deltaTime)
+    {
+        Timer += deltaTime;
+        if (Timer > MAX_TIMER)
+        {
+            Timer = 0.0f;
+
+            float rand = UnityEngine.Random.Range(0.0f, 100.0f);
+            if (rand >= 50.0f || Failsafe >= 2)
+            {
+                Failsafe = 0;
+                if (currentStateSO.ExitState())
+                {
+                    currentState = EState.Patrol;
+                    currentStateSO = stateDict[currentState];
+                    if (!currentStateSO.EnterState(ownerUnit))
+                    {
+                        Debug.LogError("Failed to enter Patrol state!");
+                        return;
+                    }
+                    OnStateChangedNotifyBegin();
+                }
+            }
+            else
+            {
+                Failsafe++;
+            }
+
+            OnTimerTimeOut?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    private void HandlePatrol(float deltaTime)
+    {
+        Timer += deltaTime;
+        if (Timer > MAX_TIMER)
+        {
+            // If we still patrolling
+            if (currentStateSO.ExecutionState == EExecutionState.Active)
+            {
+                Timer = MAX_TIMER;
+                return;
+            }
+
+            Timer = 0.0f;
+
+            float rand = UnityEngine.Random.Range(0.0f, 100.0f);
+            if (rand >= 50.0f || Failsafe >= 2)
+            {
+                Failsafe = 0;
+                if (currentStateSO.ExitState())
+                {
+                    currentState = EState.Idle;
+                    currentStateSO = stateDict[currentState];
+                    if (!currentStateSO.EnterState(ownerUnit))
+                    {
+                        Debug.LogError("Failed to enter Idle state!");
+                        return;
+                    }
+                    OnStateChangedNotifyBegin();
+                }
+            }
+            else
+            {
+                Failsafe++;
+                if (!currentStateSO.EnterState(ownerUnit))
+                {
+                    Debug.LogError("Failed to enter Patrol state!");
+                    return;
+                }
+            }
+
+            OnTimerTimeOut?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

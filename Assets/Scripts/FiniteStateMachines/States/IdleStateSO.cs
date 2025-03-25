@@ -14,7 +14,7 @@ public class IdleStateSO : BaseStateSO
 
     public override void Tick()
     {
-        Debug.Log("Idle State is Ticking!");
+
     }
 
     public override bool ExitState()
