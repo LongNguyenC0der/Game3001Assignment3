@@ -176,7 +176,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Track: Fareoh - Under Water [NCS Release]
+  m_text: 'Track: springs! - Magnetic [NCS Release]
 
     Music provided by NoCopyrightSounds.'
   m_isRightToLeft: 0
@@ -1238,14 +1238,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4916267104872088145, guid: 7e24548d7267f804aaca755a2bd16d0a, type: 3}
-      propertyPath: soundList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4916267104872088145, guid: 7e24548d7267f804aaca755a2bd16d0a, type: 3}
-      propertyPath: 'soundList.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: d825a8daf3055a6469b2adf50ff04eb0, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

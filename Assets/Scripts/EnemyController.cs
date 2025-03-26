@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyController : MonoBehaviour
@@ -53,14 +54,9 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerMovement>())
         {
-            if (IsAggressive)
-            {
-                print("We lose!");
-            }
-            else
-            {
-                print("We win!");
-            }
+            SoundManager.Instance.PlayCollisionSound();
+            string SceneName = IsAggressive ? "DefeatScene" : "VictoryScene";
+            SceneManager.LoadScene(SceneName);
         }
     }
 

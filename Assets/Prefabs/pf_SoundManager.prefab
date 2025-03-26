@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffect: {fileID: 8300000, guid: d825a8daf3055a6469b2adf50ff04eb0, type: 3}
+  collisionSound: {fileID: 8300000, guid: 65dfe65bf2670ad4ca9f4e205172b7ca, type: 3}
 --- !u!82 &676012753408389807
 AudioSource:
   m_ObjectHideFlags: 0
@@ -56,8 +57,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 457c70f3d22c7354ab6858af663776e4, type: 3}
-  m_Resource: {fileID: 8300000, guid: 457c70f3d22c7354ab6858af663776e4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 89c6d94a22fc35f4cbdecbedf33bf328, type: 3}
+  m_Resource: {fileID: 8300000, guid: 89c6d94a22fc35f4cbdecbedf33bf328, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.25
   m_Pitch: 1

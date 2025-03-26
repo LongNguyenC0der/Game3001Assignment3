@@ -36,6 +36,7 @@ public abstract class BaseFSMSO : ScriptableObject
     public abstract void Tick(float deltaTime);
     protected void OnStateChangedNotifyBegin()
     {
+        SoundManager.Instance.PlayEffectSound();
         OnStateChanged?.Invoke(this, new OnStateChangedEventArgs { state = currentState });
     }
 }

@@ -6,6 +6,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
     private AudioSource soundSource;
     [SerializeField] private AudioClip soundEffect;
+    [SerializeField] private AudioClip collisionSound;
 
     private void Awake()
     {
@@ -25,5 +26,10 @@ public class SoundManager : MonoBehaviour
     public void PlayEffectSound()
     {
         soundSource.PlayOneShot(soundEffect);
+    }
+
+    public void PlayCollisionSound()
+    {
+        soundSource.PlayOneShot(collisionSound);
     }
 }

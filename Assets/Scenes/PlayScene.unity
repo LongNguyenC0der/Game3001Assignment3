@@ -2195,53 +2195,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8362496080234633720, guid: 53a807b38801d664f86e5a09dae75ffb, type: 3}
   m_PrefabInstance: {fileID: 994728133}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1058617162
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1058617163}
-  - component: {fileID: 1058617164}
-  m_Layer: 0
-  m_Name: PlaySceneGameMode
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1058617163
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058617162}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1058617164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058617162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65d5f7ee3c9cf7546adf0e9ec345e7ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 8558824711581155201, guid: 600f25004da811b42bf0cdcd1e53a640, type: 3}
-  targetPrefab: {fileID: 8040953832540833165, guid: 53a807b38801d664f86e5a09dae75ffb, type: 3}
-  enemyPrefab: {fileID: 4002024724805353556, guid: b054867a8b0d3d347a80d5310352abbb, type: 3}
 --- !u!1001 &1065014317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2526,7 +2479,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1349699812
 MonoBehaviour:
@@ -2662,7 +2615,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1371926674
 MonoBehaviour:
@@ -3546,7 +3499,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 0}
+  m_SizeDelta: {x: 250, y: 0}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1889166758
 MonoBehaviour:
@@ -3817,7 +3770,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 250, y: 50}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1983638555
 MonoBehaviour:
@@ -4133,10 +4086,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: pf_SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1645744423802974902, guid: 7e24548d7267f804aaca755a2bd16d0a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2871326477475017158, guid: 7e24548d7267f804aaca755a2bd16d0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4191,7 +4140,6 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1576380423}
   - {fileID: 1863269259}
-  - {fileID: 1058617163}
   - {fileID: 2107404245}
   - {fileID: 2025347465}
   - {fileID: 2021435909}
