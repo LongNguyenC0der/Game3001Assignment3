@@ -50,7 +50,7 @@ public class PatrolStateSO : BaseStateSO
     {
         base.ExitState();
 
-        Debug.Log("Exitting Patrol State");
+        Debug.Log("Exiting Patrol State");
 
         return true;
     }

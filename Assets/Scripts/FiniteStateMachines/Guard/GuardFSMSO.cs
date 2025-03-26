@@ -18,6 +18,7 @@ public class GuardFSMSO : BaseFSMSO
 
         stateDict[EState.Idle] = baseStateSOArray[0];
         stateDict[EState.Patrol] = baseStateSOArray[1];
+        stateDict[EState.MoveTowardsPlayer] = baseStateSOArray[2];
 
         currentState = EState.Idle;
         currentStateSO = stateDict[currentState];
@@ -49,6 +50,7 @@ public class GuardFSMSO : BaseFSMSO
                 HandlePatrol(deltaTime);
                 break;
             case EState.MoveTowardsPlayer:
+                HandleMoveTowardsPlayer(deltaTime);
                 break;
             default:
                 break;
@@ -131,5 +133,10 @@ public class GuardFSMSO : BaseFSMSO
 
             OnTimerTimeOut?.Invoke(this, EventArgs.Empty);
         }
+    }
+
+    private void HandleMoveTowardsPlayer(float deltaTime)
+    {
+        // If the player is in line of sight
     }
 }

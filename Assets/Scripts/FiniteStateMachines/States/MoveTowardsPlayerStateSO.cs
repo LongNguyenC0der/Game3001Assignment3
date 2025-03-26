@@ -12,7 +12,7 @@ public class MoveTowardsPlayerStateSO : BaseStateSO
     {
         base.EnterState(ownerUnit);
 
-        Debug.Log("Entered Patrol State");
+        Debug.Log("Entered MoveTowardsPlayer State");
         bIsReturning = false;
 
         Transform[] patrolPoints = ownerUnit.GetPatrolPoints();
@@ -31,8 +31,6 @@ public class MoveTowardsPlayerStateSO : BaseStateSO
         {
             if (!ownerUnit.NavMeshAgent.pathPending && ownerUnit.NavMeshAgent.remainingDistance <= ownerUnit.NavMeshAgent.stoppingDistance)
             {
-                Debug.Log("Reach!");
-
                 if (bIsReturning && currentDestination == pointA)
                 {
                     ExitState();
@@ -50,7 +48,7 @@ public class MoveTowardsPlayerStateSO : BaseStateSO
     {
         base.ExitState();
 
-        Debug.Log("Exitting Patrol State");
+        Debug.Log("Exiting MoveTowardsPlayer State");
 
         return true;
     }
