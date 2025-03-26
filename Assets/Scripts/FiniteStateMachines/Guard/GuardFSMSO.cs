@@ -35,12 +35,6 @@ public class GuardFSMSO : BaseFSMSO
 
     public override void Tick(float deltaTime)
     {
-        //if (currentStateSO.ExecutionState != EExecutionState.Active)
-        //{
-        //    Debug.LogError($"State failed with status: {currentStateSO.ExecutionState}");
-        //    return;
-        //}
-
         switch(currentState)
         {
             case EState.Idle:
@@ -61,6 +55,22 @@ public class GuardFSMSO : BaseFSMSO
 
     private void HandleIdle(float deltaTime)
     {
+        // Transition to Move Towards Player
+        if (ownerUnit.Target)
+        {
+            Timer = 0.0f;
+            Failsafe = 0;
+            OnTimerTimeOut?.Invoke(this, EventArgs.Empty);
+
+            if (!ChangeState(EState.MoveTowardsPlayer))
+            {
+                Debug.LogError("Failed to transition into Move Towards Player!");
+                return;
+            }
+            return;
+        }
+
+        // Transition to Patrol
         Timer += deltaTime;
         if (Timer > MAX_TIMER)
         {
@@ -70,16 +80,10 @@ public class GuardFSMSO : BaseFSMSO
             if (rand >= 50.0f || Failsafe >= 2)
             {
                 Failsafe = 0;
-                if (currentStateSO.ExitState())
+                if (!ChangeState(EState.Patrol))
                 {
-                    currentState = EState.Patrol;
-                    currentStateSO = stateDict[currentState];
-                    if (!currentStateSO.EnterState(ownerUnit))
-                    {
-                        Debug.LogError("Failed to enter Patrol state!");
-                        return;
-                    }
-                    OnStateChangedNotifyBegin();
+                    Debug.LogError("Failed to transition into Patrol!");
+                    return;
                 }
             }
             else
@@ -93,6 +97,22 @@ public class GuardFSMSO : BaseFSMSO
 
     private void HandlePatrol(float deltaTime)
     {
+        // Transition to Move Towards Player
+        if (ownerUnit.Target)
+        {
+            Timer = 0.0f;
+            Failsafe = 0;
+            OnTimerTimeOut?.Invoke(this, EventArgs.Empty);
+
+            if (!ChangeState(EState.MoveTowardsPlayer))
+            {
+                Debug.LogError("Failed to transition into Move Towards Player!");
+                return;
+            }
+            return;
+        }
+
+        // Transition to Idle
         Timer += deltaTime;
         if (Timer > MAX_TIMER)
         {
@@ -109,16 +129,10 @@ public class GuardFSMSO : BaseFSMSO
             if (rand >= 50.0f || Failsafe >= 2)
             {
                 Failsafe = 0;
-                if (currentStateSO.ExitState())
+                if (!ChangeState(EState.Idle))
                 {
-                    currentState = EState.Idle;
-                    currentStateSO = stateDict[currentState];
-                    if (!currentStateSO.EnterState(ownerUnit))
-                    {
-                        Debug.LogError("Failed to enter Idle state!");
-                        return;
-                    }
-                    OnStateChangedNotifyBegin();
+                    Debug.LogError("Failed to transition into Idle!");
+                    return;
                 }
             }
             else
@@ -137,6 +151,35 @@ public class GuardFSMSO : BaseFSMSO
 
     private void HandleMoveTowardsPlayer(float deltaTime)
     {
-        // If the player is in line of sight
+        if (!ownerUnit.Target)
+        {
+            if (!ChangeState(EState.Idle))
+            {
+                Debug.LogError("Failed to transition into Idle!");
+                return;
+            }
+        }
+    }
+
+    private bool ChangeState(EState state)
+    {
+        if (currentStateSO.ExitState())
+        {
+            currentState = state;
+            currentStateSO = stateDict[currentState];
+            if (!currentStateSO.EnterState(ownerUnit))
+            {
+                Debug.LogError($"Failed to enter {currentState} state!");
+                return false;
+            }
+            OnStateChangedNotifyBegin();
+        }
+        else
+        {
+            Debug.LogError($"Failed to exit {currentState} state!");
+            return false;
+        }
+
+        return true;
     }
 }

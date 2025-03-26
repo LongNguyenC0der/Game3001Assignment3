@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private const float MOVE_SPEED = 3.0f;
+    private const float MOVE_SPEED = 4.0f;
     private const float TURN_SPEED = 300.0f;
 
     private Rigidbody rb;
