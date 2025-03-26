@@ -6,6 +6,7 @@ public class StatePanelUI : MonoBehaviour
 {
     [SerializeField] private Toggle idleToggle;
     [SerializeField] private Toggle patrolToggle;
+    [SerializeField] private Toggle moveTowardsPlayerToggle;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text failsafeText;
 
@@ -45,6 +46,7 @@ public class StatePanelUI : MonoBehaviour
                 patrolToggle.isOn = true;
                 break;
             case EState.MoveTowardsPlayer:
+                moveTowardsPlayerToggle.isOn = true;
                 break;
             default:
                 break;
