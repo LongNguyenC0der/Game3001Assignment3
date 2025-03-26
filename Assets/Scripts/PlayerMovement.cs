@@ -5,30 +5,23 @@ public class PlayerMovement : MonoBehaviour
     private const float MOVE_SPEED = 3.0f;
     private const float TURN_SPEED = 300.0f;
 
+    private Rigidbody rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();    
+    }
+
     private void Update()
     {
-        // Calculating direction
         float horizontalMovement = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontalMovement, 0.0f, verticalMovement).normalized;
+        Vector3 distanceToMove = MOVE_SPEED * direction - rb.linearVelocity;
+
+        rb.AddForce(distanceToMove);
+
         if (direction == Vector3.zero) return;
-
-        Vector3 distanceToMove = MOVE_SPEED * Time.deltaTime * direction;
-        Vector3 newPosition = gameObject.transform.position + distanceToMove;
-
-        // Clamping position within map's boundary
-        float x = newPosition.x;
-        float z = newPosition.z;
-
-        if (gameObject.transform.position.x > PlaySceneGameMode.BOUNDARY) x = PlaySceneGameMode.BOUNDARY;
-        else if (gameObject.transform.position.x < -PlaySceneGameMode.BOUNDARY) x = -PlaySceneGameMode.BOUNDARY;
-        if (gameObject.transform.position.z > PlaySceneGameMode.BOUNDARY) z = PlaySceneGameMode.BOUNDARY;
-        else if (gameObject.transform.position.z < -PlaySceneGameMode.BOUNDARY) z = -PlaySceneGameMode.BOUNDARY;
-
-        newPosition.x = x;
-        newPosition.z = z;
-
-        gameObject.transform.position = newPosition;
         Turning(direction);
     }
 
