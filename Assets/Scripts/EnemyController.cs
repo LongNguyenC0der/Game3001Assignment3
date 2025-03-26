@@ -7,13 +7,15 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private BaseFSMSO finiteStateMachine;
     [SerializeField] private Transform[] patrolPoints;
     public NavMeshAgent NavMeshAgent { get; private set; }
-    public LineOfSight LineOfSight { get; private set; } // This might not need to be a property
     public Transform Target { get; private set; } = null;
+    public bool IsAggressive { get; set; } = false;
+
+    private LineOfSight lineOfSight;
 
     private void Awake()
     {
         NavMeshAgent = GetComponent<NavMeshAgent>();
-        LineOfSight = GetComponentInChildren<LineOfSight>();
+        lineOfSight = GetComponentInChildren<LineOfSight>();
     }
 
     private void Start()
@@ -25,8 +27,8 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            LineOfSight.OnPlayerVisible += LineOfSight_OnPlayerVisible;
-            LineOfSight.OnPlayerOutOfSight += LineOfSight_OnPlayerOutOfSight;
+            lineOfSight.OnPlayerVisible += LineOfSight_OnPlayerVisible;
+            lineOfSight.OnPlayerOutOfSight += LineOfSight_OnPlayerOutOfSight;
 
             finiteStateMachine.Activate(this);
         }
@@ -45,6 +47,21 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         finiteStateMachine.Tick(Time.deltaTime);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerMovement>())
+        {
+            if (IsAggressive)
+            {
+                print("We lose!");
+            }
+            else
+            {
+                print("We win!");
+            }
+        }
     }
 
     public Transform[] GetPatrolPoints() { return patrolPoints; }
