@@ -13,7 +13,6 @@ public class PatrolStateSO : BaseStateSO
         base.EnterState(ownerUnit);
 
         Debug.Log("Entered Patrol State");
-        //ownerUnit.NavMeshAgent.isStopped = false;
         bIsReturning = false;
 
         Transform[] patrolPoints = ownerUnit.GetPatrolPoints();
@@ -52,7 +51,6 @@ public class PatrolStateSO : BaseStateSO
         base.ExitState();
 
         Debug.Log("Exiting Patrol State");
-        //ownerUnit.NavMeshAgent.isStopped = true;
 
         return true;
     }

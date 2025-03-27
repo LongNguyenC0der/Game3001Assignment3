@@ -44,7 +44,7 @@ public class GuardFSMSO : BaseFSMSO
                 HandlePatrol(deltaTime);
                 break;
             case EState.MoveTowardsPlayer:
-                HandleMoveTowardsPlayer(deltaTime);
+                HandleMoveTowardsPlayer();
                 break;
             default:
                 break;
@@ -149,9 +149,12 @@ public class GuardFSMSO : BaseFSMSO
         }
     }
 
-    private void HandleMoveTowardsPlayer(float deltaTime)
+    private void HandleMoveTowardsPlayer()
     {
-        if (!ownerUnit.Target)
+        // Transition to Idle
+        if (!ownerUnit.Target
+            && !ownerUnit.NavMeshAgent.pathPending
+            && ownerUnit.NavMeshAgent.remainingDistance <= ownerUnit.NavMeshAgent.stoppingDistance)
         {
             if (!ChangeState(EState.Idle))
             {

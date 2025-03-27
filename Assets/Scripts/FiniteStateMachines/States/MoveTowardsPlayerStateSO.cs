@@ -8,7 +8,6 @@ public class MoveTowardsPlayerStateSO : BaseStateSO
         base.EnterState(ownerUnit);
 
         Debug.Log("Entered MoveTowardsPlayer State");
-        //ownerUnit.NavMeshAgent.isStopped = false;
         ownerUnit.IsAggressive = true;
 
         return true;
@@ -16,7 +15,10 @@ public class MoveTowardsPlayerStateSO : BaseStateSO
 
     public override void Tick()
     {
-        ownerUnit.NavMeshAgent.destination = ownerUnit.Target.position;
+        if (ownerUnit.Target)
+        {
+            ownerUnit.NavMeshAgent.destination = ownerUnit.Target.position;
+        }
     }
 
     public override bool ExitState()
@@ -24,7 +26,6 @@ public class MoveTowardsPlayerStateSO : BaseStateSO
         base.ExitState();
 
         Debug.Log("Exiting MoveTowardsPlayer State");
-        //ownerUnit.NavMeshAgent.isStopped = true;
         ownerUnit.IsAggressive = false;
 
         return true;
