@@ -17,9 +17,10 @@ public class PlayerMovement : MonoBehaviour
         float horizontalMovement = Input.GetAxisRaw("Horizontal");
         float verticalMovement = Input.GetAxisRaw("Vertical");
         Vector3 direction = new Vector3(horizontalMovement, 0.0f, verticalMovement).normalized;
-        Vector3 distanceToMove = MOVE_SPEED * direction - rb.linearVelocity;
+        //Vector3 distanceToMove = MOVE_SPEED * direction - rb.linearVelocity;
 
-        rb.AddForce(distanceToMove);
+        //rb.AddForce(distanceToMove);
+        rb.linearVelocity = MOVE_SPEED * direction;
 
         if (direction == Vector3.zero) return;
         Turning(direction);
